@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 对于DOM 0级绑定的事件下面的方法会被覆盖 不利于代码的维护和开发
+    document.onclick = function() {
+        // 
+    }
+    // 当然我们可以用addEventlistener 添加事件来处理这样的问题
+    // 或者 封装函数处理这类问题
+    function event(dom, type, fn) {
+        // 判断阅览器内核来处理对应的兼容问题
+        if(dom.addEventListener) {
+            dom.addEventListener(type, fn)
+        } else if (dom.attachEvent) { // 支持attachEvent方法的阅览器
+            dom.attachEvent(type, fn)
+        } else {
+            dom['on'+ type] = fn
+        }
+    }
+
+    // 阻止默认行为的兼容方法
+    function getEvent(e) {
+        return e || window.event
+    }
+    function getTarget(e) {
+        return e || e.srcElement
+    }
+    function _preventDefault(e) {
+        if(e.preventDefault) {
+            e.preventDefault()
+        } else {
+            e.returnValue = fasle
+        }
+    }
+</script>
+</html>

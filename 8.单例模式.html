@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 单例模式下的静态变量
+    function Conf() {
+        let Static = {
+            NAME: 'CONF',
+            COUNT: 1000
+        }
+        return {
+            get: function(value) {
+                return Static[value]? Static[value]: null
+            }
+        }
+    }
+    let eg1 = Conf().get('NAME')
+    // 惰性单例
+    function lazySingle() {
+        var instance
+        function Single() {
+            return {
+                COUNT:1000,
+                TIMES:8888
+            }
+        }
+        if(!instance) {
+            return new Single()
+        } else {
+            return instance
+        }
+    }
+    let eg2 = lazySingle().TIMES 
+</script>
+</html>

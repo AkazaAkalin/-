@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function decorator(dom, type, fn) {
+        if(typeof dom[type] == 'funtion') {
+            let oldMethods = dom[type];
+            dom[type] = function() {
+                oldMethods()
+                fn()
+            }
+        } else {
+            dom[type] = fn()
+        }
+    } 
+</script>
+</html>

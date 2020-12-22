@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Name(name) {
+        var that = this;
+        // (function(name, that) {
+        //     that.name = name 
+        // })(name, that)
+        this.name = name 
+    }
+    function Work(work) {
+        switch(work) {
+            case 'code' : 
+            this.work = '程序员'
+            this.desc = 'codecodecode'
+            break;
+            case 'UI':
+            this.work = 'UI设计师'
+            this.desc = 'UIUIUIUIUI'
+            break;
+        }
+    }
+    function Person(params) {
+        this.skill = params && params.skill || 'unknown'
+        this.name = params && params.name || 'unknown'
+    }
+    Person.prototype.getWork = function() {
+        return this.work
+    }
+    Person.prototype.getName = function() {
+        return this.name
+    }
+    function Employee (name, work) {
+        var _person = new Person()
+        _person.name = new Name(name)
+        _person.work = new Work(work)
+        return _person
+    }
+    let employee = new Employee('guo', 'code')
+    console.log(employee)
+    
+</script>
+</html>

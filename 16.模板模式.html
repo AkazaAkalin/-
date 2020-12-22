@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Alert(data) {
+        if(!data) { this.data = '' }
+        this.container = document.createElement('div')
+        this.title = document.createElement('p')
+        this.close = document.createElement('button')
+        this.confirm = document.createElement('button')
+        this.title.innerHTML = data
+        this.close.innerHTML = 'close'
+        this.confirm.innerHTML = 'confirm'
+    }
+    Alert.prototype = {
+        init: function() {
+            this.container.appendChild(this.title)
+            this.container.appendChild(this.close)
+            this.container.appendChild(this.confirm)
+            document.body.appendChild(this.container)
+            this.btnMethods()
+        },
+        btnMethods: function() {
+            let that = this
+            this.close.onclick = function() {
+                console.log('close');
+                that.hide()
+            }
+            this.confirm.onclick = function() {
+                console.log('confirm');
+                that.show()
+            }
+        },
+        show: function() {
+            this.container.style = 'display: bloack'
+        },
+        hide: function() {
+            this.container.style = 'display: none'
+        }
+    }
+    let a1 = new Alert('aaaaaaaa')
+    a1.init()
+    let a2 = new Alert('bbbbbbbbbb')
+    a2.init()
+
+    function BigAlert(data, title) {
+        Alert.call(this,data)
+        this.bigtitle = document.createElement('h1')
+        this.bigtitle.innerHTML = title
+    }
+    BigAlert.prototype = new Alert()
+    let b1 = new BigAlert('ccccc', 'bigbigbig')
+    b1.container.appendChild(b1.bigtitle)
+    b1.init()
+</script>
+</html> 

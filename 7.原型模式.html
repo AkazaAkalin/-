@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Swiper(imgArr, container){
+        this.imgArr = imgArr
+        this.container = container
+        this.createImg = function() {
+            console.log('createimg')
+        }
+        this.changeImg = function() {
+            console.log('changeImg')
+        }
+    }
+    function SlideLooper(imgArr, container) {
+        Swiper.call(this, imgArr, container)
+        this.changeImg = function() {
+            console.log('SlideLooper')
+        }
+    }
+    function Swiper2(imgArr, container) {
+        this.imgArr = imgArr
+        this.container = container
+    }
+    Swiper2.prototype = {
+        createImg: function () {
+            console.log('Swiper2,createImg')
+        },
+        changeImg: function () {
+            console.log('swpier2,changeImg')
+        }
+    }
+    function SliderLooper2(imgArr, container) {
+        Swiper2.call(this, imgArr, container)
+    }
+    SliderLooper2.prototype = new Swiper2()
+    // SliderLooper2.prototype.changeImg = function() {
+    //     console.log('SliderLooper2,changeImg')
+    // }
+    let eg1 = new SliderLooper2([1,2,3],['one','two'])
+    eg1.changeImg()
+
+    // 继承函数
+    function ExtendPrototype() {
+        let args = arguments
+        function F() {
+            
+        }
+        for (let i = 0; i < args.length; i++) {
+            for(var j in args[i]) {
+                F.prototype[j] = args[i][j]
+            }
+        }
+        return new F()
+    }
+    let eg2 = new ExtendPrototype ({name:'guohua', age:'24'},{code: function(){
+        console.log('codecode')
+    }})
+</script>
+</html>

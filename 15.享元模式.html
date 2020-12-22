@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // var Flyweight = function() {
+    //     var created = []
+    //     function create() {
+    //         var dom = document.createElement('div')
+    //         dom.innerHTML = article[i]
+    //         document.getElementById('').appendChild(dom)
+    //         created.push(dom)
+    //     }
+    //     return {
+    //         getDiv: function() {
+    //             if(created.length < 5) {
+    //                 return create()
+    //             } else {
+    //                 var div = created.shift()
+    //                 created.push(div)
+    //             }
+    //         }
+    //     }
+    // }()
+    // for (let i = 0; i < 5; i++) {
+    //     Flyweight.getDiv().innerHTML(i)
+    // }
+    // //... 
+    // XX.onclick = function() {
+    //     if(i<5) return;
+    //     var n = ++paper * num % length
+    //     j = 0
+    //     for (let index = 0; index < 5; index++) {
+    //         if(article[i]) {
+    //             //
+    //         }
+    //     }
+    // }
+    // 动作享元模式
+    var moveWeight = {
+        moveX: function(x) {
+            this.x = x
+        },
+        moveY : function(y) {
+            this.y = y
+        }
+    }
+    function Person(x,y,c) {
+        this.x = x
+        this.y = y
+        this.color = c
+    }
+    Person.prototype = moveWeight
+    Person.prototype.changeColor = function(c) {
+        this.color = c
+    }
+    var p1 = new Person(0,0,'red')
+    p1.moveX(1)
+    p1.moveY(1)
+    p1.changeColor('green')
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+    var News = function() {
+        this.children = []
+        this.element = null
+    }
+    News.prototype = {
+        init: function() {
+            throw new Error('initinit')
+        },
+        add: function() {
+            throw new Error('addadaddadad')
+        },
+        getElement: function() {
+            throw new Error('getelement')
+        } 
+    }
+    var container = function(id, parent) {
+        News.call(this)
+        this.id = id
+        this.parent = parent
+        this.init()
+    }
+    container.prototype = new News()
+    container.prototype.init = function() {
+        this.element = document.createElement('ul')
+        this.element.id = this.id
+        this.element.className = 'newContainer'
+    }
+    container.prototype.add = function(child) {
+        this.children.push(child)
+        this.element.appendChild(child.getElement()) 
+        return this                                                                    
+    }
+    container.prototype.getElement = function() {
+        return this.element
+    }
+    container.prototype.show = function() {
+        this.parent.appendChild(this.element)
+    }
+    var Item = function(className) {
+        News.call(this)
+        this.className = className
+        this.init()
+    }
+    Item.prototype = new News()
+    Item.prototype.init = function() {
+        this.element = document.createElement('li')
+        this.element.className = this.className
+    }
+    Item.prototype.add = function(child) {
+        this.children.push(child)
+        this.element.appendChild(child.getElement())
+        return this
+    }
+    Item.prototype.getElement = function() {
+        return this.element
+    }
+    var new1 = new container('news', document.body)
+    new1.add(new Item('normal'))  
+</script>
+</html>

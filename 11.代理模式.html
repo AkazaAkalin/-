@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>  
+    
+</body>
+<script>
+    // let obj = {
+    //     name: '',
+    //     age: '',
+    //     date: '',
+    //     price: 123,
+    //     size: '',
+    //     count: '',
+    // }
+    // console.log('hobby' in obj)
+    //站长统计
+    
+    let count = (function(param) {
+        let img = new Image()
+        let src = 'www.baidu.com?'
+        for(i in param) {
+            src += i + '=' + param[i]
+        }
+    })()
+    count({name: 10})
+</script>
+</html>

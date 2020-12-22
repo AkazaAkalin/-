@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Color(clr) {
+        this.clr = clr 
+    }
+    Color.prototype.draw = function() {
+        console.log('draw',this.clr)
+    }
+    function Shape(shp) {
+        this.shp = shp
+    }
+    Shape.prototype.change = function() {
+        console.log('shape')
+    }
+    function Unit() {
+        this.color = new Color('red')
+        this.shape = new Shape('shape')
+    } 
+    Unit.prototype.init = function() {
+        this.color.draw()
+        this.shape.change()
+    }
+    var smallUnit = new Unit('blue','wawaawlala')
+</script>
+</html>
