@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var Mediator = (function() {
+        var _msg = {}
+        return {
+            register: function(type, fun) {
+                if(_msg[type]) {
+                    _msg[type].push(fun)
+                } else {
+                    _msg[type] = []
+                    _msg[type].push(fun)
+                }
+            },
+            send: function(type) {
+                if(_msg[type]) {
+                    for (let index = 0; index < _msg[type].length; index++) {
+                        const element = _msg[type][index];
+                        element()
+                    }
+                }
+            }
+        }
+    })()
+    Mediator.register('demo', function() {
+        console.log("test1")
+    })
+    Mediator.register('demo', function() {
+        console.log("test2")
+    })
+    Mediator.send('demo')
+</script>
+</html>

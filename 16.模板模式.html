@@ -59,5 +59,39 @@
     let b1 = new BigAlert('ccccc', 'bigbigbig')
     b1.container.appendChild(b1.bigtitle)
     b1.init()
+
+    function forMatterStr(str, data) {
+        return str.replace(/\{#(\w+)#\}/g, function(match, key){
+            console.log(match, key)
+            return typeof(data[key]) == undefined ? '' : data[key]
+        })
+    }
+    // /\{#\w+#\}/g
+    let res = forMatterStr('<a href="{#href#}" title="{#title#}">"{#name#}"</a>', {href:'bbb', title:'title', name: 'wawa'})
+    console.log(res)
+
+    function Nav(data) {
+        this.item = '<a href="{#href#}" title="{#title#}">"{#name#}"</a>'
+        this.html = document.createElement('div')
+        // data.forEach((index) => {
+        //     this.html += forMatterStr(this.item, data[index])
+        // })
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            this.html += forMatterStr(this.item, data[index])
+        }
+        return this.html
+    }
+    function NumNav(data) {
+        var tpl = '<b>{#num#}</b>'
+        for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            data[index].name += data[index].name + forMatterStr(tpl, data[index])
+        }
+        return Nav.call(this, data)
+    } 
+    var nav = document.createElement('div')
+    nav.innerHTML = NumNav([{href: 'www', title: 'ttt', name:'aaa', num:'1'}])
+    document.body.appendChild(nav)
 </script>
 </html> 

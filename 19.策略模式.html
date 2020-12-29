@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //策略模式 内部变量存放所有策略方法,通过暴露的方法进行调用
+    var Strategy = (function () {
+        var method = {
+            m1 : function(paramas) {
+                console.log('m1',paramas)
+            },
+            m2: function(paramas) {
+                console.log('m2',paramas)
+            }
+        }
+        var add = function(type, fn) {
+            method[type] = fn
+        }
+        var check = function(type, params) {
+            return method[type] && method[type](params)
+        }
+        return {
+            add: add,
+            check: check,
+        }
+    })()
+    Strategy.check('m1', '111233')
+    Strategy.add('m3', function(p) {console.log('33',p)})    
+    Strategy.check('m3','tt')
+</script>
+</html>

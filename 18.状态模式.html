@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var States = {
+        state0 : function(){
+            console.log(0)
+        },
+        state1 : function() {
+            console.log(1)
+        },
+        state2 : function() {
+            console.log(2)
+        },
+        state3 : function() {
+            console.log(3)
+        }
+    }
+    var ResultState = (function() {
+        function show(result) {
+            States['state' + result] && States['state' + result]()
+        }
+        return {
+            show : show
+        }
+    })()
+    ResultState.show(3)
+
+    //  状态模式动作
+    var lastAction = ''
+    function changeAction(action) {
+        if (action == 'jump') {
+            // jump
+        } else if (action == 'move') {
+            // move
+        } else {
+            // other
+        }
+        lastAction = action
+    }
+    var MarryState = function() {
+        var _currnetState = {},
+        state = {
+            jump: function() {
+                console.log('jump')
+            },
+            move: function() {
+                console.log('move')
+            },
+            shoot: function() {
+                console.log('shoot')
+            },
+            squat: function() {
+                console.log('squat')
+            }
+        }
+        var changeState = function () {
+            var arg = arguments
+            _currnetState = {}
+            if(arg.length) {
+                for (let index = 0; index < arg.length; index++) {
+                    const element = arg[index];
+                    _currnetState[arg[index]] = true
+                }
+            }
+            return this
+        }
+        var goes = function () {
+            // console.log('one goes')
+            for (const i in _currnetState) {
+                // console.log(i,_currnetState, _currnetState[i])
+                state[i] && state[i]();
+            }
+            return this
+        }
+        return {
+            change: changeState,
+            goes: goes
+        }
+    }
+    MarryState().change('jump','shoot').goes().goes()
+    var marry = new MarryState()
+    // marry.change('jump','shoot').goes().goes()
+</script>
+</html>

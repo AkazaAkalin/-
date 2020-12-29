@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id='box'>123</p>
+</body>
+<script>
+    var bindEvent = function(dom, type, fn) {
+        if(dom.addEventListener) {
+            dom.addEventListener(type, fn)
+        } else if (dom. attachEvent) {
+            dom.attachEvent(type, fn)
+        } else {
+            dom['on'+type] = fn
+        }
+    }
+    function bindIEEvent(dom, type, fn, data) {
+        var data = data || {}
+        // dom.attachEvent('on'+ type, function(e) {
+        //     fn.call(dom, e, data)
+        // })
+        dom.addEventListener(type, function(e){
+            fn.call(dom, e, data)
+        })
+    }
+    var dom = document.getElementById('box')
+    bindIEEvent(dom, 'click', function(e, d){
+        console.log(e, d)
+        dom.innerHTML += "," + d.text
+    }, {text: 'hello', value: 1})
+
+    var Vistor = (function(){
+        return {
+            push: function() {
+                var len = arguments[0].length || 0;
+                console.log(len, Array.prototype.slice.call(arguments,1))
+                var args = Array.prototype.slice.call(arguments, 1)
+                arguments[0].length = len + arguments.length - 1 ;
+                return Array.prototype.push.apply(arguments[0], args);
+            }
+        }
+    })();
+    var a = new Object;
+    Vistor.push(a, 1,2,3,4)
+</script>
+</html>

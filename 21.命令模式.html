@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var Command = (function() {
+        var template = {
+            product: ['<div>',
+            '<img src="{#src#}" />',
+            '<p>{#text#}</p>',
+            '</div>'].join(''),
+            title: ['<div>',
+                '<img src="{#src#}" />',
+                '<p>{#text#}</p>',
+                '</div>'].join('')
+        }
+        var html = ''
+        function formatter(str, obj) {
+            let reg = /\{#(\w+)#\}/g
+            return str.replace(reg, function(match, key) {
+                return obj[key]
+            })
+        }
+        var Action = {
+            create: function(data, view) {
+                console.log(data, view)
+                if(data.length) {
+                    for (let index = 0; index < data.length; index++) {
+                        const element = data[index];
+                        html += formatter(template[view], data[index])
+                    }
+                } else {
+                    html += formatter(tpl[view], data)
+                }
+            }
+        }
+        return function excute(msg) {
+            msg.param = Object.prototype.toString.call(msg.param) === '[object Array]'?
+            msg.param: [msg.param]
+            Action[msg.command].apply(Action, msg.param)
+        }
+    })()
+
+    Command({
+        command: 'create',
+        param: ['product', 'title']
+    })
+</script>
+</html>

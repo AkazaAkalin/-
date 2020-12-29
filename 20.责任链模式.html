@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /* 对于一个表单验证的功能、如果当前表单需求未能确认后续会添加完善, 
+    这时需要对验证功能进行分析,分解解耦成单个的动作 */
+    function getData(data, dealType, dom) {
+        //获取用户数据
+        //创建异步对象
+        var xhr = new XMLHttpRequest()
+        var url = 'xxxxxx.php?method=xxx'
+        //设置请求行open()
+        xhr.open("get","URL以及需要传递的参数数据")
+        //发送请求
+        xhr.send(null)
+        xhr.onload = function(res) {
+            if(xhr.status >= 200 && xhr.status < 300) {
+                dealData(res.responseText, dealType, dom)
+            }
+        }
+    }
+
+    var dealData = function(data, dealType, dom) {
+        var dataType = Object.prototype.toString.call(data)
+        switch(dealType) {
+            case 'sug': 
+            if(dataType === '[object Array]') {
+                return createSug(data, dom)
+            }
+            if(dataType === '[object object]') {
+                var newData = []
+                for( var i in data) {
+                    newData.push(deal[i])
+                    return createSug(newData, dom)
+                }
+            }
+            break;
+            case  'validate': 
+            return createValidate(data, dom)
+            break;
+        }
+    }
+    function createValidate(data, dom) {
+        console.log(data, dom)
+    }
+    function createSug(data, dom) {
+        console.log(data, dom)
+    }
+</script>
+</html>

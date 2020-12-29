@@ -9,6 +9,83 @@
     
 </body>
 <script>
-    
+    var Observe = (function() {
+        var _message = {}   
+        return {
+            regist: function(type, fn) {
+                if(typeof _message[type] == 'undefined') {
+                    _message[type] = [fn]
+                } else {
+                    _message[type].push(fn)
+                }
+                // console.log(_message)
+            },
+            fire: function(type, args) {
+                if(!_message[type]) {
+                    return
+                }
+                var events = {
+                    type: type,
+                    args: args || {}
+                }
+                // for (let index = 0; index < _message[type].length; index++) {
+                //     const element = _message[type][index];
+                //     element.call(this, events)
+                // }
+                // console.log(_message)
+                i = 0,
+                len = _message[type].length
+                for(; i<len; i++) {
+                    _message[type][i].call(this, events)
+                }
+
+            },
+            remove: function(type, fn) {
+                if(Array.isArray(_message[type])) {
+                    for(let i = _message[type].length; i > 0; i--) {
+                        const element = _message[type][i]
+                        element === fn && _message[type].splice(i, 1)
+                    }
+                }
+                // console.log(_message)
+
+            }
+        }
+
+    })()
+    Observe.regist('test', function(e) {
+        console.log(e.type, e.args.msg)
+    });
+    Observe.fire('test', {msg: '123123213'})
+
+    function Student(result) {
+        var that = this
+        that.result = result
+        that.say = function() {
+            console.log(that.result)
+        }
+    }
+    Student.prototype.answer = function(question) {
+        Observe.regist(question, this.say)
+    }
+    Student.prototype.sleep = function(question) {
+        console.log('sleep')
+        Observe.remove(question, this.say)
+    }
+    function Teacher() {}
+    Teacher.prototype.ask = function(question) {
+        Observe.fire(question)
+    }
+    let s1 = new Student('student1')
+    let s2 = new Student('student2')
+    let s3 = new Student('student3')
+    s1.answer('question1')
+    s1.answer('question2')
+    s2.answer('question1')
+    s3.answer('question1')
+    s3.sleep('question2')
+    let T1 = new Teacher
+    T1.ask('question1')
+    T1.ask('question2')
 </script>
 </html>

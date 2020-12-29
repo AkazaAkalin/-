@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script >
+    var cache = (function() {
+        var _cache = {}
+        return function(data, fun) {
+            if(_cache[data]) {
+                // 如果缓存里有数据
+                fun()
+            } else {
+                // 如果没有缓存的数据 有使用Ajax获取数据
+            }
+        }
+    })()
+</script>
+</html>
