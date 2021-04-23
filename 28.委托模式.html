@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='container'>
+        <button id='btn'>click</button>
+    </div>
+</body>
+<script>
+    // 经典的循环绑定ul-li事件 对于新增的li标签也能绑定事件
+    ul.onclick = function(e) {
+        var e = e || window.event,
+            tar = e.target || e.srcElement
+        if(tar.nodeName.toLowerCase() == 'li') {
+            tar.style.backgroundColor = 'grey'
+        }
+    }
+    // 引起内存泄漏的问题
+    function g(id) {return document.getElementById(id)}
+    g('btn').onclick = function() {
+        g('container').innerHTML = 'resetRESET'
+    }
+    // 触发点击事件之后 父元素的内容被重置，同时内部的btn按钮被覆盖，但是按钮的事件没有被清楚
+    // 按钮的事件就泄漏到内存中了
+    g('btn').onclick = function() {
+        g('btn').onclick = null //手动清除
+        g('container').innerHTML = 'resetRESET'
+    }
+    // 在标准的浏览器中 手动清除是不需要的 这时就需要使用事件委托
+    g('container').onclick = function(e) {
+        var tar = e.target || e.srcElement
+        if(tar.id == 'btn') {
+            g('container').innerHTML = 'RESET'
+        }
+    }
+    // 多个请求的委托
+    $.get('server.php?q=banner', function(res){
+        // 
+    })
+    $.get('server.php?q=asider', function(res){
+        // 
+    })
+    $.get('server.php?q=article', function(res){
+        // 
+    })
+    $.get('server.php?q=message', function(res){
+        // 
+    })
+    var Deal = {
+        banner:  function(res){},
+        asider: function(res){},
+        article: function(res){},
+        message: function(res){},
+    }
+    $.get('server.php?', function(res) {
+        for(var i in Deal) {
+            Deal[i] && Deal[i](res[i])
+        }
+    })
+</script>
+</html>

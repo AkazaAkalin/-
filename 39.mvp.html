@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        在MVC模式下, view层的视图依据model中的数据来创建,这一过程未通知过controller层
+        在controller层不知情的情况下完成了一次MV层的交互
+        为了避免这一情况, MVP模式产生了
+        M,V,P presenter 管理层, view不会直接引用model的数据，而是在管理层中实现
+    */
+    var MVP = function() {}
+    MVP.model = function() {
+        var M = {}
+        M.data = {}
+        M.conf = {}
+        return {
+            getData: function (m) {
+                return M.data[m]
+            },
+            /***
+            * @param v 模块数据
+            * @param m 模块名称
+            *
+            */
+            setData: function(m, v) {
+                M.data[m] = v
+                // return this
+            }
+        }
+    }()
+    MVP.view = function() {
+        
+    }()
+    function a() {
+        var num = 1;
+    　  nAdd=function(){num+=1}
+        return function() {
+            console.info(num++)
+        }
+    }
+    var res = a()
+    console.log(nAdd)
+</script>
+</html>

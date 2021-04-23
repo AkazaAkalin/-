@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class='box'>
+        <div class='b1'></div>
+    </div>
+    <div id='icon'>
+        <ul class='icon'>
+            <li>weiwxin</li>
+            <li>weibo</li>
+        </ul>
+        <div>
+            <img src="" alt="">
+            <img src="" alt="">
+            <span>123123</span>
+        </div>
+    </div>
+    <input type="text" onclick='enter(this)'>
+</body>
+<script>
+    /*
+        截流模式的核心思想就是创造计时器，延迟执行程序，这也使得计时器中的回调函数的操作
+        异步执行，已不只是说脱离了原来程序的执行顺序，，但某一时刻，当前执行程序一定是所
+        有异步程序中某一个，
+        由此节流模式的有点有二：程序可控，执行某一个程序可判断是否清楚他的计时器来实现，
+        程序异步，不会影响后续程序的执行
+    */
+    function enter(e) {
+        console.log(e)
+    } 
+    function throttle(func, delay) {
+        var last = 0
+        return function() {
+            var _this = this,                      
+                args = arguments,
+                now = new Date()
+            if(now - last > delay) {
+                func.apply(_this, args)
+            }
+        }  
+    }
+    function debounce(func, wait, immediate) {
+        var timeout
+        return function() {
+            var context = this, args = arguments
+            var later = function() {
+                timeout = null
+                if (!immediate) func.apply(context, args)
+            }
+            var callNow = immediate && !timeout
+            clearTimeout(timeout)
+            timeout = setTimeout(later, wait)
+            if (callNow) func.apply(context, args)
+        }
+    }
+    function $ (id){ return document.getElementById(id) }
+    function $tag(tag, container) {
+        container = container || document
+        return container.getElementByTagName(tag)
+    }
+    var Layer = function(id) {
+        this.container = $(id)
+        this.layer = $tag('div', this.container)[0]
+        this.lis = $tag('li', this.container)
+        this.img = $tag('img', this.container)
+        this.bindEvent();
+    }
+    Layer.prototype = {
+        bindEvent: function() {
+            var that = this
+            function hide() {
+                this.layer.className = ''
+            }
+            function show() {
+                this.layer.className = 'show'
+            }
+            that.on(that.container, 'mouseenter', function() {
+                throttle(true, hideLayer)
+            })
+        },
+        on: function(ele, type, fun) {
+            ele.addEventListener(type, fun);
+            return this
+        }
+    }
+</script>
+</html>

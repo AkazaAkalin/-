@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var DAO = function(preId, timeSign) {
+        this.preId = preId
+        this.timeSign = timeSign
+    }
+    DAO.prototype = {
+        state: {
+            SUCCESS:0,
+            FAIL:1,
+            OVERFLOW:2,
+            TIMEOUT:3
+        },
+        Storage: localStorage|| window.localStorage,
+        getKey: function(key) {
+            return this.preId + key
+        },
+        set: function(key, value, time, callback) {
+            var status = this.state.SUCCESS
+            var key = this.getKey(key)
+            var value = value
+            try {
+                this.Storage.setItem(key, value + time)
+            } catch {
+                status = this.state.FAIL
+            }
+            callback && callback.call(this, status, value, time)
+        },
+        get: function() {},
+        rerove: function() {}
+    }
+    var eg = new DAO('TEST','timeSign')
+    eg.set('name', 'guohua', '123', function(){console.log(this.Storage)})
+</script>
+</html>

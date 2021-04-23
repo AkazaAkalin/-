@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var MVC = MVC || {}
+    MVC.model = function() {
+        var M = {}
+        M.data = {}
+        M.conf = {}
+        return {
+            getData: function(m) {
+                return M.data[m]
+            },
+            getConf: function(c) {
+                return M.data[c]
+            },
+            setData: function(m,v) {
+                M.data[m] = v
+                return this;
+            },
+            setConf: function(c,v) {
+                M.conf[c] = v
+                return this;
+            }
+        }        
+    } ()
+    MVC.view = function() {
+        var M = MVC.model;
+        var V = {}
+        return function(v) {
+            V[v]();
+        }
+    } ()
+    MVC.controller = function() {
+        var M = MVC.model;
+        var V = MVC.view;
+        var C = {}
+    } ()
+    // model 获取数据,配置项
+    // view 根据model中的数据和配置项创建视图层
+    // controller  为view层的元素绑定事件等
+</script>
+</html>

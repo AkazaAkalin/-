@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='test'> test test</div>
+</body>
+<script>
+    /*******
+        请求发出后，无论模块是否存在，立即执行后续逻辑，实现模块开发中对模块的引用
+    ********/
+    /**********A      ***********/
+    // var data = null,
+    // dom = A('#nav'),
+    // createNav = function() {
+    //     var li = A('li', dom);
+    //     for(var i = 0, len = data.length) {
+    //         if(data[i].hasGuide) {
+    //             $(li[i]).addClass('has-guide')
+    //         }
+    //     }
+    // }
+    // /***************************/
+    // var li = A('li', dom)
+    // li.on('mouseover',function() {
+    //     ///
+    // })
+    // li.on('mouseout', function() {
+    //     ///
+    // })
+    // A.ajax('', function(res) {
+    //     if(res.err == 0 ){
+    //         data = res.data
+    //         createNav
+    //     }
+    // })
+
+    // 定义模块管理对象
+    var F = F || {};
+    /***
+    *定义模块方法，（理论上，模块方法应该放在闭包中实现，可以隐藏内部的信息）
+    * @param str 模块路由
+    * @param fn 模块方法
+    **/
+    F.define = function(str, fn) {
+        var parts = str.split('.'),
+        // old 是当前的祖父模块， parent是当前模块的父级模块
+        old = parent = this,
+        // i 层级模块 len 是层级模块的长度
+        i = len = 0;
+        // 如果第一个模块是模块管理器的单体对象，则移除
+        if(parts[0] === 'F') {
+            parts = parts.slice(1)
+        }
+        // 屏蔽define 与 module 模块方法的重写
+        if(parts[0] === 'define' || parts[0] === 'module') {
+            return
+        }
+        for(len = parts.length; i< len; i++) {
+            // 如果父级模块没有当前模块则去声明
+            if(typeof parent[parts[i]] === 'undefined') {
+                parent[parts[i]] = {}
+            }
+            // 缓存下一层父级模块
+            old = parent
+            parent = parent[parts[i]]
+        }
+        if(fn) {
+            old[parts[--i]] = fn()
+        }
+        return this  
+    }
+    F.define('string', function() {
+        return {
+            trim: function(str) {
+                return str.replace(/^\s+|\s+$/g, '')
+            }
+        }
+    })
+    F.define('dom', function(){
+        var $ = function(id) {
+            $.dom = document.getElementById(id)
+            return $
+        }
+        $.html = function(html) {
+            if(html) {
+                this.dom.innerHTML = html;
+                return this
+            } else {
+                return this.dom.innerHTML
+            }
+        }
+        return $
+    })
+    F.dom('test').html()
+    
+    function test(str) {
+        var parts = str.split('.')
+        var context = origin =  this
+        for(var i = 0; i< parts.length; i++) {
+            context[parts[i]] = {}
+            // origin = context
+            context = context[parts[i]]
+        }
+        return this
+    }
+</script>
+</html>

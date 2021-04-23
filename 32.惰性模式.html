@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 减少条件判断分支
+    var fn = function(condition) {
+        if(condition) {
+            fn = function(){
+                console.log('1')
+            }    
+        } else {
+            fn = function(){
+                console.log('2')
+            }  
+        }
+        fn()       
+    }
+</script>
+</html>

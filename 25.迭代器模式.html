@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var Iterator = function(items, container) {
+        var container = contaner || document.getElementById(container) || document
+        var items = container.getElementByTagName(items)
+        var length = items.length, index = 0
+        var splice = [].splice
+        return {
+            first: function() {
+                index = 0
+                return items.index[0]
+            },
+            next: function() {
+                if(++index < length) {
+                    return item[index]
+                } else {
+                    index = length -1
+                    return null
+                }
+            },
+            get: function(num) {
+                index = num > 0 ? num % length : num % length +length;
+                return items[index]
+            },
+            dealEach: function(fun) {
+                var args = Array.prototype.slice(arguments, 1)
+                for (let index = 0; index < length; index++) {
+                    fun.apply(item[i], args)
+
+                }
+            },
+            dealItem: function(num, fun) {
+                fun.apply(this.get(num), Array.prototype.slice(arguments, 2))
+            },
+            exclusive: function(num, allFun, numFun) {
+                this.dealEach(allFun)
+                if(Object.prototype.toString.call(num) === '[object Array]') {
+                    for(var i = 0, len = num.length; i < len; i++) {
+                        this.dealItem(num[i], numFun)
+                    } 
+                } else {
+                    this.dealItem(num, numFun)
+                }
+            },
+        }
+    }
+    // 数组迭代器
+    var ArrayIterator = function(arr, fun) {
+        for(var i = 0; i< arr.length; i++) {
+            if(fun.call(arr[i], i, arr[i]) === false) {
+                break;
+            }
+            // fun.apply(i,arr[i])
+        }
+    }
+    var eachObject = function(obj, fun) {
+        for(var i in obj) {
+            if(fun.call(obj[i], i , obj[i]) === false) {
+                break;
+            }
+        }
+    }
+    var A = {
+        client: {
+            user: {
+                name: 'guohua'
+            }
+        }
+    }
+    function Agetter(key) { 
+        if(!A) return undefined
+        var result = A
+        var key = key.split('.')
+        for (let index = 0; index < key.length; index++) {
+            const element = key[index];
+            if(result[element] !== 'undefined') {
+                result = result[element]
+            } else {
+                return undefined
+            }
+        }
+        return result
+    }
+    console.log(Agetter('client.user.name'))
+</script>
+</html>

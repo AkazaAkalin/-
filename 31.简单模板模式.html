@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='container'>
+
+    </div>
+</body>
+<script>
+    /*
+        通过格式化字符串拼凑出试图以避免大量的DOM操作优化了性能
+    */
+    var A = A || {}
+    A.root = document.getElementById('container')
+    A.stategy = {
+        'listPart': function(data) {
+            var s = document.createElement('div')
+                ul = '',
+                ldata = data.data.li
+                tpl = [
+                    `<h2>#h2#</h2>`,
+
+                ].join('')
+                liTpl = [
+                    '<li><strong>#strong#</strong></li>'
+                ]
+            data.id && (s.id = data.id)
+            for (let i = 0; i < ldata.length; i++) {
+                if(ldata[i].em || ldata[i].span) {
+                    ul += A.formatter(liTpl, ldata[i])
+                }
+            }
+            data.data.ul = ul
+            s.innerHTML = A.formatter(tpl, data.data)
+            A.root.appendChild(s)
+        },
+        // 'listPart': function(data) {
+        //     var s = document.createElement('div')
+        //         h = document.createElement('h2')
+        //         p = document.createElement('p')
+        //         ht = document.createElement(data.data.h2)
+        //         pt = document.createElement(data.data.p)
+        //         ul = document.createElement('ul')
+        //         ldata = data.data.li
+        //     data.id && (s.id = data.id)
+        //     s.className = 'part'
+        //     h.appendChild(ht)
+        //     p.appendChild(pt)
+        //     s.appendChild(h)
+        //     s.appendChild(p)
+        //     for(var i=0, len = ldata.length; i < len; i++) {
+        //         li = document.createElement('li')
+        //         strong = document.createElement('strong')
+        //         span = document.createElement('span')
+        //         t = document.createTextNode(ldata[i].strong)
+        //         c = document.createTextNode(ldata[i].span)
+        //         strong.appendChild(t)
+        //         span.appendChild(c)
+        //         li.appendChild(strong)
+        //         li.appendChild(span)
+        //         ul.appendChild(li)
+        //     }
+        //     s.appendChild(ul)
+        //     A.root.appendChild(s)
+        // },
+        'codePart': function() {},
+        'onlyTitle': function() {},
+        'guide': function() {}
+    }
+    A.init = function(data) {
+        return A.stategy[data.type](data)
+    }
+    A.formatter = function(str, data) {
+        return str.replace(/\#(\w+)\#/g, function(match, key){
+            console.log(key,data[key], data[key] === undefined)
+            return typeof data[key] === undefined ? '': data[key]
+        })
+    }
+    var a = A.formatter('<h1>#h1#</h1>',{h1: '123'})
+    var e = {
+        'listPart': function(data) {
+            var s = document.createElement('div')
+                ul = '',
+                ldata = data.data.li
+                tpl = [
+                    `<h2>#h2#</h2>`,
+
+                ].join('')
+                liTpl = [
+                    '<li><strong>#strong#</strong></li>'
+                ]
+            data.id && (s.id = data.id)
+            for (let i = 0; i < ldata.length; i++) {
+                if(ldata[i].em || ldata[i].span) {
+                    ul += A.formatter(liTpl, ldata[i])
+                }
+            }
+            data.data.ul = ul
+            s.innerHTML = A.formatter(tpl, data.data)
+        }   
+    }
+</script>
+</html>

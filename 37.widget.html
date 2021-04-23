@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // input: '<a href='#' class="data {#is_selected#}? 'is_Selected':''" value="{#value#}">{#text#}</a>'
+    // input: data: {is_Selected: true, value: 123, text: 'i am text'}
+    // output: '<a href='#' class="data is_Selected" value="123">i am text</a>'
+    function formatter(str, data) {
+        return str.replace(/\{#(\w+)#\}/g, function(index, key){
+            console.log(index, key)
+            if(data[key]){
+                return data[key]
+            } else {
+                return ''
+            }
+        })
+    }
+    let str = `<a href='#' class="data {#is_selected#}? 'is_Selected':''" value="{#value#}">{#text#}</a>`
+    formatter(str, {is_Selected: true, text: 'i am text'})
+</script>
+</html>

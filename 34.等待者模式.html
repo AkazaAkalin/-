@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            --body-child: red;
+        }
+        .parent {
+        /*  变量的作用域就是它所在的选择器的有效范围，所以.parent 读取不到 child 中的变量  */
+        color: var(--body-child);
+        /*  定义变量  */
+        --parent-color: blue;
+        }
+        .child {
+        /*  通过 var 读取变量  */
+        color: var(--parent-color);
+        --child-color: green;
+        }
+        .subChild {
+            color: var(--child-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        I am Parent
+        <div class="child">
+            I am Child
+            <div class='subChild'> 
+                I am subChild
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // 通过对多个异步进程监听, 来触发未来发生的动作
+    var Waiter = function() {
+        var dfd = [],
+            doneArr = [],
+            failArr = [],
+            slice = [].prototype.slice,
+            that = this
+        var promise = function() {
+            this.resolved = false
+            this.rejected = false
+        }
+        promise.prototype = {
+            resolve: function() {
+                this.resolved = true
+            },
+            reject: function() {
+                this.rejected = true
+            }
+        }
+        that.Deffered = function() {
+            return new promise()
+        }
+        function exec(arr) {
+            
+        }
+        than.when = function() {}
+        that.done = function() {}
+        that.fail = function() {}
+    } 
+    var all = function(arr) {
+        let len = arr.len
+        let results = []
+        let count = 0
+        return new Promise((resolve,reject) =>{
+            arr.forEach(item => {
+                item.then(res=>{
+                    count++
+                    results.push(res)
+                    count >= len && resolve(results)
+                })
+            })
+        })
+    } 
+</script>
+</html>

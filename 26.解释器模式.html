@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div></div>
+    <div id='container'>
+        <div>
+            <div>
+                <ul>
+                    <li><span id='span1'>1</span></li>
+                    <li><span id='span2'>2</span></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div>
+                <ul>
+                    <li><span id='span6'>6</span></li>
+                    <li><span id='span7'>7</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+function getSublings(node) {
+    if(node.previousSibling) {
+        var name = '',
+        count = 1,
+        nodeName = node.nodeName
+        sibling = node.previousSibling
+        while(sibling) {
+            if(sibling.nodeType == 1 && sibling.nodeType === node.nodeType && sibling.nodeName) {
+                if(node == sibling.nodeName) {
+                    name += count++
+                } else {
+                    count = 1;
+                    name += '|' + sibling.nodeName.toUpperCase()
+                }
+            }
+            sibling = sibling.previousSibling
+        }
+        return name
+    } else {
+        return ''
+    }
+}
+var Interpreter = (function(){
+    function getSublings(nide) {
+
+    }
+    return function(node, wrap){
+        var path = []
+        wrap = wrap || document
+        if(node == wrap) {
+            
+        }
+    }
+})()
+</script>
+</html>
